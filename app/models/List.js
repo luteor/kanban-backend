@@ -5,7 +5,7 @@ class List extends Model {}
 
 List.init({
   name: {
-    type: DataTypes.STRING,
+    type: DataTypes.TEXT,
     allowNull: false,
     defaultValue: "",
   },
