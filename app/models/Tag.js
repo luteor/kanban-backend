@@ -3,19 +3,23 @@ const sequelize = require("../db");
 
 class Tag extends Model {}
 
-Tag.init({
-  name: {
-    type: DataTypes.TEXT,
-    allowNull: false,
-    defaultValue: "",
+Tag.init(
+  {
+    name: {
+      type: DataTypes.TEXT,
+      allowNull: false,
+      defaultValue: "",
+    },
+    color: {
+      type: DataTypes.TEXT,
+      allowNull: false,
+      defaultValue: "#149ECA",
+    },
   },
-  color: {
-    type: DataTypes.TEXT,
-    allowNull: false,
-    defaultValue: "#149ECA",
-  },
-  sequelize,
-  tableName: "tag",
-});
+  {
+    sequelize,
+    tableName: "tag",
+  }
+);
 
 module.exports = Tag;

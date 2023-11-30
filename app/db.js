@@ -9,7 +9,7 @@ const sequelize = new Sequelize(process.env.PG_DATABASE_URL, {
     updatedAt: "updated_at",
     underscored: true,
   },
-  logging: (...msg) => console.log(msg),
+  // logging: (...msg) => console.log(msg),
 });
 
 async function testConnection() {
@@ -20,6 +20,6 @@ async function testConnection() {
     console.error("Unable to connect to the database:", error);
   }
 }
-testConnection();
+// testConnection();
 
 module.exports = sequelize;
