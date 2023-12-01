@@ -5,7 +5,7 @@ const listController = require("./controllers/listController");
 const router = express.Router();
 
 router.get("/", (req, res) => {
-  res.send("Hello");
+  res.json("Hello");
 });
 
 router.get("/lists", listController.getAllLists);

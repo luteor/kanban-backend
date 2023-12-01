@@ -31,7 +31,7 @@ const listController = {
     try {
       const listId = req.params.id;
 
-      const list = await List.findByPk(listId, {
+      const existingList = await List.findByPk(listId, {
         include: [
           {
             association: "cards",
@@ -45,14 +45,15 @@ const listController = {
         order: [["cards", "position", "ASC"]],
       });
 
-      if (!list) {
-        return res.status(404).json(`Can't find list ${listId}`);
+      if (!existingList) {
+        res.status(404).json(`Can't find list ${listId}`);
+        return;
       }
 
-      return res.status(200).json(list);
+      return res.status(200).json(existingList);
     } catch (error) {
       console.trace(error);
-      res.status(500).json(error.toString());
+      res.status(500).json(error);
     }
   },
 
@@ -67,6 +68,7 @@ const listController = {
 
       if (bodyErrors.length) {
         res.status(422).json(bodyErrors);
+        return;
       }
 
       const newList = await List.create({
@@ -77,7 +79,7 @@ const listController = {
       res.status(201).json(newList);
     } catch (error) {
       console.trace(error);
-      res.status(500).json(error.toString());
+      res.status(500).json(error);
     }
   },
 
@@ -88,7 +90,8 @@ const listController = {
 
       const existingList = await List.findByPk(listId);
       if (!existingList) {
-        res.status(404).send(`Can't find list ${listId}`);
+        res.status(404).json(`Can't find list ${listId}`);
+        return;
       }
 
       const updatedList = await existingList.update({
@@ -99,7 +102,7 @@ const listController = {
       res.status(200).json(updatedList);
     } catch (error) {
       console.trace(error);
-      res.status(500).json(error.toString());
+      res.status(500).json(error);
     }
   },
 
@@ -109,14 +112,15 @@ const listController = {
 
       const existingList = await List.findByPk(listId);
       if (!existingList) {
-        res.status(404).send(`Can't find list ${listId}`);
+        res.status(404).json(`Can't find list ${listId}`);
+        return;
       }
 
       await existingList.destroy();
       res.status(200).json("List successfully deleted");
     } catch (error) {
       console.trace(error);
-      res.status(500).json(error.toString());
+      res.status(500).json(error);
     }
   },
 };
