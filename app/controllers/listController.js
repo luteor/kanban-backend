@@ -1,4 +1,4 @@
-const { List, Card, Tag } = require("../models/index");
+const { List } = require("../models/index");
 
 const listController = {
   getAllLists: async (req, res) => {
@@ -55,6 +55,7 @@ const listController = {
       res.status(500).json(error.toString());
     }
   },
+
   createList: async (req, res) => {
     try {
       const { name, position } = req.body;
@@ -74,6 +75,28 @@ const listController = {
       });
 
       res.status(201).json(newList);
+    } catch (error) {
+      console.trace(error);
+      res.status(500).json(error.toString());
+    }
+  },
+
+  modifyList: async (req, res) => {
+    try {
+      const listId = req.params.id;
+      const { name, position } = req.body;
+
+      const existingList = await List.findByPk(listId);
+      if (!existingList) {
+        res.status(404).send(`Can't find list ${listId}`);
+      }
+
+      const updatedList = await existingList.update({
+        name: name || existingList.name,
+        position: isNaN(position) ? existingList.position : position,
+      });
+
+      res.status(200).json(updatedList);
     } catch (error) {
       console.trace(error);
       res.status(500).json(error.toString());
