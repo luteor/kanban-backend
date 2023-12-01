@@ -11,7 +11,7 @@ router.get("/", (req, res) => {
 router.get("/lists", listController.getAllLists);
 router.get("/lists/:id", listController.getOneList);
 router.post("/lists", listController.createList);
-router.put("lists/:id", listController.modifyList);
-router.delete("lists/:id", listController.deleteList);
+router.put("/lists/:id", listController.modifyList);
+router.delete("/lists/:id", listController.deleteList);
 
 module.exports = router;
