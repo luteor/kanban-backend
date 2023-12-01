@@ -7,7 +7,7 @@ const tagController = require("./controllers/tagController");
 const router = express.Router();
 
 router.get("/", (req, res) => {
-  res.json("Hello");
+  res.send("Hello");
 });
 
 router.get("/lists", listController.getAllLists);
