@@ -102,6 +102,23 @@ const listController = {
       res.status(500).json(error.toString());
     }
   },
+
+  deleteList: async (req, res) => {
+    try {
+      const listId = req.params.id;
+
+      const existingList = await List.findByPk(listId);
+      if (!existingList) {
+        res.status(404).send(`Can't find list ${listId}`);
+      }
+
+      await existingList.destroy();
+      res.status(200).json("List successfully deleted");
+    } catch (error) {
+      console.trace(error);
+      res.status(500).json(error.toString());
+    }
+  },
 };
 
 module.exports = listController;
