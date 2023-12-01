@@ -71,10 +71,15 @@ const listController = {
         return;
       }
 
-      const newList = await List.create({
+      const newListData = {
         name: name,
-        position: position,
-      });
+      };
+
+      if (position) {
+        newListData.position = position;
+      }
+
+      const newList = await List.create(newListData);
 
       res.status(201).json(newList);
     } catch (error) {
