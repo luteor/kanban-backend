@@ -3,6 +3,7 @@ require("dotenv").config();
 const express = require("express");
 const cors = require("cors");
 const middlewareBodySanitizer = require("./app/middlewares/bodySanitizer");
+const middlewareError404 = require("./app/middlewares/error404");
 const router = require("./app/router");
 
 const app = express();
@@ -15,6 +16,8 @@ app.use(cors());
 app.use(middlewareBodySanitizer);
 
 app.use(router);
+
+app.use(middlewareError404);
 
 app.listen(port, () => {
   console.log(`App listening on port ${port}`);
