@@ -10,5 +10,6 @@ router.get("/", (req, res) => {
 
 router.get("/lists", listController.getAllLists);
 router.get("/lists/:id", listController.getOneList);
+router.post("/lists", listController.createList);
 
 module.exports = router;

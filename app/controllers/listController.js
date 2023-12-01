@@ -19,6 +19,7 @@ const listController = {
           ["cards", "position", "ASC"],
         ],
       });
+
       res.status(200).json(lists);
     } catch (error) {
       console.trace(error);
@@ -29,6 +30,7 @@ const listController = {
   getOneList: async (req, res) => {
     try {
       const listId = req.params.id;
+
       const list = await List.findByPk(listId, {
         include: [
           {
@@ -42,11 +44,36 @@ const listController = {
         ],
         order: [["cards", "position", "ASC"]],
       });
-      if (list) {
-        res.status(200).json(list);
-      } else {
-        res.status(404).json(`Can't find list ${listId}`);
+
+      if (!list) {
+        return res.status(404).json(`Can't find list ${listId}`);
       }
+
+      return res.status(200).json(list);
+    } catch (error) {
+      console.trace(error);
+      res.status(500).json(error.toString());
+    }
+  },
+  createList: async (req, res) => {
+    try {
+      const { name, position } = req.body;
+      const bodyErrors = [];
+
+      if (!name) {
+        bodyErrors.push("Name can't be empty");
+      }
+
+      if (bodyErrors.length) {
+        res.status(422).json(bodyErrors);
+      }
+
+      const newList = await List.create({
+        name: name,
+        position: position,
+      });
+
+      res.status(201).json(newList);
     } catch (error) {
       console.trace(error);
       res.status(500).json(error.toString());
