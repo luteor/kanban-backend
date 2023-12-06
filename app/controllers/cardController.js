@@ -68,17 +68,20 @@ const cardController = {
         return;
       }
 
+      const lastPosition = await Card.max("position", {
+        where: {
+          list_id: list_id,
+        },
+      });
+
       const newCardData = {
         title: title,
         list_id: list_id,
+        position: lastPosition !== null ? lastPosition + 1 : 0,
       };
 
       if (color) {
         newCardData.color = color;
-      }
-
-      if (position) {
-        newCardData.position = position;
       }
 
       const newCard = await Card.create(newCardData);
