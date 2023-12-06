@@ -59,7 +59,7 @@ const listController = {
 
   createList: async (req, res) => {
     try {
-      const { name, position } = req.body;
+      const { name } = req.body;
       const bodyErrors = [];
 
       if (!name) {
@@ -71,13 +71,12 @@ const listController = {
         return;
       }
 
+      const lastPosition = await List.max("position");
+
       const newListData = {
         name: name,
+        position: lastPosition !== null ? lastPosition + 1 : 0,
       };
-
-      if (position) {
-        newListData.position = position;
-      }
 
       const newList = await List.create(newListData);
 
