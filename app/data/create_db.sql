@@ -36,13 +36,13 @@ CREATE TABLE "card_has_tag" (
 );
 
 INSERT INTO "list" ("name", "position")
-VALUES ('To do', 0);
+VALUES ('To do', 1);
 
 INSERT INTO "list" ("name", "position")
-VALUES ('In progress', 1);
+VALUES ('In progress', 2);
 
 INSERT INTO "list" ("name", "position")
-VALUES ('Done', 2);
+VALUES ('Done', 3);
 
 INSERT INTO "card" ("title", "color", "list_id", "position")
 VALUES ('Learn React', '#087EA4', 1, 0);

@@ -98,10 +98,41 @@ const listController = {
         return;
       }
 
+      const oldListPosition = existingList.position;
+      const newListPosition = position;
+
       const updatedList = await existingList.update({
         name: name || existingList.name,
-        position: isNaN(position) ? existingList.position : position,
+        position: newListPosition || oldListPosition,
       });
+
+      const allLists = await List.findAll({
+        order: [["position", "ASC"]],
+      });
+
+      for (const list of allLists) {
+        if (list.dataValues.id !== parseInt(listId)) {
+          if (oldListPosition < newListPosition) {
+            if (
+              list.dataValues.position > oldListPosition &&
+              list.dataValues.position <= newListPosition
+            ) {
+              await list.update({
+                position: list.dataValues.position - 1,
+              });
+            }
+          } else if (oldListPosition > newListPosition) {
+            if (
+              list.dataValues.position < oldListPosition &&
+              list.dataValues.position >= newListPosition
+            ) {
+              await list.update({
+                position: list.dataValues.position + 1,
+              });
+            }
+          }
+        }
+      }
 
       res.status(200).json(updatedList);
     } catch (error) {
