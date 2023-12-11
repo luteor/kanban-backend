@@ -1,4 +1,5 @@
 const { List } = require("../models/index");
+const { Op } = require("sequelize");
 
 const listController = {
   getAllLists: async (req, res) => {
@@ -111,23 +112,23 @@ const listController = {
       });
 
       for (const list of allLists) {
-        if (list.dataValues.id !== parseInt(listId)) {
+        if (list.id !== parseInt(listId)) {
           if (oldListPosition < newListPosition) {
             if (
-              list.dataValues.position > oldListPosition &&
-              list.dataValues.position <= newListPosition
+              list.position > oldListPosition &&
+              list.position <= newListPosition
             ) {
               await list.update({
-                position: list.dataValues.position - 1,
+                position: list.position - 1,
               });
             }
           } else if (oldListPosition > newListPosition) {
             if (
-              list.dataValues.position < oldListPosition &&
-              list.dataValues.position >= newListPosition
+              list.position < oldListPosition &&
+              list.position >= newListPosition
             ) {
               await list.update({
-                position: list.dataValues.position + 1,
+                position: list.position + 1,
               });
             }
           }
@@ -151,7 +152,24 @@ const listController = {
         return;
       }
 
+      const deletedListPosition = existingList.position;
+
       await existingList.destroy();
+
+      const listsToUpdate = await List.findAll({
+        where: {
+          position: {
+            [Op.gt]: deletedListPosition,
+          },
+        },
+      });
+
+      for (const list of listsToUpdate) {
+        await list.update({
+          position: list.position - 1,
+        });
+      }
+
       res.status(200).json("List successfully deleted");
     } catch (error) {
       console.trace(error);

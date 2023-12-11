@@ -13,7 +13,6 @@ List.init(
     position: {
       type: DataTypes.INTEGER,
       allowNull: false,
-      defaultValue: 0,
     },
   },
   {
