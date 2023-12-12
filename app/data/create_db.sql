@@ -45,7 +45,7 @@ INSERT INTO "list" ("name", "position")
 VALUES ('Done', 3);
 
 INSERT INTO "card" ("title", "color", "list_id", "position")
-VALUES ('Learn React', '#087EA4', 1, 0);
+VALUES ('Learn React', '#087EA4', 1, 1);
 
 INSERT INTO "tag" ("name", "color")
 VALUES ('Urgent', '#ED1C24');
