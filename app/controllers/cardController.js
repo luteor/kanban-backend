@@ -1,4 +1,5 @@
 const { Card } = require("../models/index");
+const { Op } = require("sequelize");
 
 const cardController = {
   getAllCardsInOneList: async (req, res) => {
@@ -162,7 +163,24 @@ const cardController = {
         return;
       }
 
+      const deletedCardPosition = existingCard.position;
+
       await existingCard.destroy();
+
+      const CardsToUpdate = await Card.findAll({
+        where: {
+          position: {
+            [Op.gt]: deletedCardPosition,
+          },
+        },
+      });
+
+      for (const card of CardsToUpdate) {
+        await card.update({
+          position: card.position - 1,
+        });
+      }
+
       res.status(200).json("Card successfully deleted");
     } catch (error) {
       console.trace(error);
