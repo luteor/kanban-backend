@@ -47,6 +47,15 @@ VALUES ('Done', 3);
 INSERT INTO "card" ("title", "color", "list_id", "position")
 VALUES ('Learn React', '#087EA4', 1, 1);
 
+INSERT INTO "card" ("title", "color", "list_id", "position")
+VALUES ('2', '#087EA4', 1, 2);
+
+INSERT INTO "card" ("title", "color", "list_id", "position")
+VALUES ('3', '#087EA4', 1, 3);
+
+INSERT INTO "card" ("title", "color", "list_id", "position")
+VALUES ('4', '#087EA4', 1, 4);
+
 INSERT INTO "tag" ("name", "color")
 VALUES ('Urgent', '#ED1C24');
 

@@ -107,34 +107,6 @@ const listController = {
         position: newListPosition || oldListPosition,
       });
 
-      const allLists = await List.findAll({
-        order: [["position", "ASC"]],
-      });
-
-      for (const list of allLists) {
-        if (list.id !== parseInt(listId)) {
-          if (oldListPosition < newListPosition) {
-            if (
-              list.position > oldListPosition &&
-              list.position <= newListPosition
-            ) {
-              await list.update({
-                position: list.position - 1,
-              });
-            }
-          } else if (oldListPosition > newListPosition) {
-            if (
-              list.position < oldListPosition &&
-              list.position >= newListPosition
-            ) {
-              await list.update({
-                position: list.position + 1,
-              });
-            }
-          }
-        }
-      }
-
       res.status(200).json(updatedList);
     } catch (error) {
       console.trace(error);

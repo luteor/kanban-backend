@@ -118,34 +118,6 @@ const cardController = {
         position: newCardPosition || oldCardPosition,
       });
 
-      const allCards = await Card.findAll({
-        order: [["position", "ASC"]],
-      });
-
-      for (const card of allCards) {
-        if (card.id !== parseInt(cardId)) {
-          if (oldCardPosition < newCardPosition) {
-            if (
-              card.position > oldCardPosition &&
-              card.position <= newCardPosition
-            ) {
-              await card.update({
-                position: card.position - 1,
-              });
-            }
-          } else if (oldCardPosition > newCardPosition) {
-            if (
-              card.position < oldCardPosition &&
-              card.position >= newCardPosition
-            ) {
-              await card.update({
-                position: card.position + 1,
-              });
-            }
-          }
-        }
-      }
-
       res.status(200).json(updatedCard);
     } catch (error) {
       console.trace(error);
