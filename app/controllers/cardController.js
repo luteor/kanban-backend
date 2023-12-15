@@ -78,7 +78,7 @@ const cardController = {
       const newCardData = {
         title: title,
         list_id: list_id,
-        position: lastPosition !== null ? lastPosition + 1 : 0,
+        position: lastPosition !== null ? lastPosition + 1 : 1,
       };
 
       if (color) {

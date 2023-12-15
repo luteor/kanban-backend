@@ -44,22 +44,4 @@ VALUES ('In progress', 2);
 INSERT INTO "list" ("name", "position")
 VALUES ('Done', 3);
 
-INSERT INTO "card" ("title", "color", "list_id", "position")
-VALUES ('Learn React', '#087EA4', 1, 1);
-
-INSERT INTO "card" ("title", "color", "list_id", "position")
-VALUES ('2', '#087EA4', 1, 2);
-
-INSERT INTO "card" ("title", "color", "list_id", "position")
-VALUES ('3', '#087EA4', 1, 3);
-
-INSERT INTO "card" ("title", "color", "list_id", "position")
-VALUES ('4', '#087EA4', 1, 4);
-
-INSERT INTO "tag" ("name", "color")
-VALUES ('Urgent', '#ED1C24');
-
-INSERT INTO "card_has_tag" ("card_id", "tag_id")
-VALUES (1,1);
-
 COMMIT;
